@@ -68,3 +68,15 @@ spring-mvc.xml
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 </web-app>
+
+
+
+@RequestMapping("/hello")
+	public String helloWorld(){
+		return "hello";
+	}
+	
+	@RequestMapping("/")
+	public String homepage(){
+		return "index";
+	}
