@@ -1,0 +1,76 @@
+First of all create a Dynamic web project 
+  -- Now add all spring jars, common loggins jars and servlet-api, jstl-api, jstl-impl jars to the lib folder Build the path 
+  -- Now add web.xml in to the WEB-INF 
+  -- Now create a spring bean configuration file on WEB-INF and name it as projectname-servlet.xml
+  -- Now create a package which you mention in the context:component-scan base-package="org.springExample.com"
+  -- Now create a Controller.java and do the RequestMapping("/hello")
+  -- Now you can add the below code to the Controller.java
+      
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class HelloController {
+
+	@RequestMapping("/hello")
+	public ModelAndView helloWorld(HttpServletRequest request){
+		String name = request.getParameter("name");
+		List<String> courses = getList(); //getList() contains all the ArrayList items in it 
+		Date date = new Date();
+		
+    //This is the alternate way to create the Model View
+		ModelAndView model = new ModelAndView("hello");
+		model.addObject("name",name); //("alias", name);
+		model.addObject("courses", courses);
+		model.addObject("date", date);
+		return model;
+	}
+	
+	@RequestMapping("/")
+	public String homepage(){
+		return "index";
+	}
+	
+  /* Creating a List which returns list */
+	private List<String> getList(){
+		List<String> list = new ArrayList<String>();
+		list.add("English");
+		list.add("Maths");
+		list.add("Chemisty");
+		return list;
+		
+	}
+}
+
+Now Edit the hello.jsp 
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Hello</title>
+</head>
+<body>
+<h2> ${param.name} </h2>
+<h2> ${date} </h2>
+<p>
+The Courses Available
+</p>
+<ol>
+	<c:forEach var = "temp" items = "${courses}"> <!-- -This is the core JSTL tag library -->
+	<li>${temp}</li></c:forEach>
+</ol>
+</body>
+</html>
+
+Now execute on server 
